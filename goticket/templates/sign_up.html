@@ -1,0 +1,88 @@
+{% include 'header.html' %}
+{% load static %}
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<div class="signup-form">
+			<form id="signupform" action="" class="mt-5 border p-4 bg-light shadow">
+				{% csrf_token %}
+				<h4 class="mb-5 text-secondary">Create Your Account</h4>
+				<div class="row">
+					<div class="mb-3 col-md-6">
+						<label>First Name<span class="text-danger">*</span></label>
+						<input id="username" type="text" name="fname" class="form-control" placeholder="Username">
+					</div>
+
+					<div class="mb-3 col-md-6">
+						<label>First Name<span class="text-danger">*</span></label>
+						<input id="email" type="text" name="fname" class="form-control" placeholder="Email">
+					</div>
+
+					<div class="mb-3 col-md-6">
+						<label>First Name<span class="text-danger">*</span></label>
+						<input id="first_name" type="text" name="fname" class="form-control" placeholder="Enter First Name">
+					</div>
+
+					<div class="mb-3 col-md-6">
+						<label>Last Name<span class="text-danger">*</span></label>
+						<input id="last_name" type="text" name="Lname" class="form-control" placeholder="Enter Last Name">
+					</div>
+
+					<div class="mb-3 col-md-12">
+						<label>Password<span class="text-danger">*</span></label>
+						<input id="password" type="password" name="password" class="form-control" placeholder="Enter Password">
+					</div>
+					<div class="mb-3 col-md-12">
+						<label>Confirm Password<span class="text-danger">*</span></label>
+						<input type="password" name="confirmpassword" class="form-control" placeholder="Confirm Password">
+					</div>
+					<select id="user_select_type" class="form-select">
+						<option value="CUSTOMER" selected>Customer</option>
+						<option value="EVENT MANAGER">Event Manager</option>
+					</select>
+					<div class="col-md-12">
+						<button type="submit" class="btn btn-dark btn-primary float-end">Sign-Up</button>
+					</div>
+				</div>
+			</form>
+			<p class="text-center mt-3 text-secondary">If you have account, Please <a href="{% url 'login' %}">Login Now</a></p>
+		</div>
+	</div>
+</div>
+</div>
+
+<script>
+
+	$(document).ready(function(){
+			$("#signupform").on('submit', function(e){
+					event.preventDefault();
+					$.ajax({
+							url: 'auth/users/',
+							type: "POST",
+							data: JSON.stringify({
+									'username': $('#username').val().trim(),
+									'password': $('#password').val().trim(),
+									'first_name': $('#first_name').val().trim(),
+									'last_name': $('#last_name').val().trim(),
+									'email': $('#email').val().trim(),
+									'user_type': $('#user_select_type').val().trim(),
+								}),
+							dataType: "json",
+							cache: false,
+							processData: false,
+							contentType: "application/json; charset=UTF-8",
+							success: function (data) {
+									console.log('IT WORKED');
+									localStorage.setItem('refreshToken', data['refresh']);
+									localStorage.setItem('accessToken', data['access']);
+								},
+							error: function (rs, e) {
+									console.error(rs.status);
+									console.error(rs.responseText);
+								}
+						}); // end ajax
+				}); // end submit
+		}); // end document
+
+</script>
+{% include 'footer.html' %}
+</body></html>
