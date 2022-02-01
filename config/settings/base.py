@@ -79,6 +79,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "goticket.users",
     "goticket.home",
+    "goticket.events",
+    "goticket.tickets",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -7,7 +7,8 @@ from django.utils.translation import gettext_lazy as _
 # Import custom manager classes
 from .managers import CustomerManager, EventManagerManager, UserTypes
 
-# from tickets.models import Ticket
+# from goticket.tickets.models import Ticket
+
 
 """
 Custom user model inheriting from the abtract user since
@@ -79,10 +80,10 @@ class Customer(User):
 class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
+        "users.User", on_delete=models.CASCADE, related_name="user_profile"
     )
     # tickets = models.ManyToManyField(
-    # 	Ticket, on_delete=models.SET_NULL, null=True
+    # 	"tickets.Ticket", related_name="user_tickets"
     # )
 
     def __str__(self):
