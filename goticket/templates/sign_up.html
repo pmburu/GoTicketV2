@@ -56,7 +56,7 @@
 			$("#signupform").on('submit', function(e){
 					event.preventDefault();
 					$.ajax({
-							url: 'auth/users/',
+							url: '{% url 'user-list' %}',
 							type: "POST",
 							data: JSON.stringify({
 									'username': $('#username').val().trim(),
