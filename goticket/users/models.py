@@ -1,9 +1,7 @@
 import uuid
 
-from django.contrib.auth.models import AbstractUser, Group, UserManager
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
-from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -84,7 +82,7 @@ class Customer(User):
 
 class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    owner = models.OneToOneField(
+    user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="user_profile"
     )
     # tickets = models.ManyToManyField(
@@ -93,40 +91,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return "{}'s Profile".format(self.owner.last_name)
-
-
-"""
-Creating pre-save signals to set manager as staff status in Django user
-"""
-
-
-@receiver(pre_save, sender=User)
-def manager_to_staff_status(sender, instance, **kwargs):
-    if instance is not None and instance.user_type == UserTypes.EVENT_MANAGER:
-        instance.is_staff = True
-
-
-"""
-Signal for adding event manager to event managers group - has all permissions
-"""
-
-
-@receiver(post_save, sender=User)
-def add_to_group(sender, instance, created, **kwargs):
-    if created and instance.user_type == UserTypes.EVENT_MANAGER:
-        event_managers_group = Group.objects.get(name="Event Managers")
-        instance.groups.add(event_managers_group)
-
-
-"""
-Create user profile upon user creation
-"""
-
-
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(owner=instance)
 
 
 """
