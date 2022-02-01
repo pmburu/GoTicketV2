@@ -78,6 +78,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "goticket.users",
+    "goticket.home",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -285,7 +286,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-# django-compressor
+# SIMPLE_JWT
 # ------------------------------------------------------------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),

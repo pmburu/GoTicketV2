@@ -5,9 +5,10 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path("", include("home.urls")),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
@@ -21,7 +22,7 @@ urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
     # DRF
-    # User management
+    # 1. User management
     #  - Djoser
     #    - Djoser Simple JWT
     path("api/auth/", include("djoser.urls")),
@@ -31,6 +32,20 @@ urlpatterns += [
         "api/docs/",
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
+    ),
+    # 2. JWT
+    path(
+        "api/auth/jwt/create",
+        jwt_views.TokenObtainPairView.as_view(),
+        name="token_obtain_pair",
+    ),
+    path(
+        "api/auth/jwt/refresh",
+        jwt_views.TokenRefreshView.as_view(),
+        name="token_refresh",
+    ),
+    path(
+        "api/auth/jwt/verify/", jwt_views.TokenVerifyView.as_view(), name="token_verify"
     ),
 ]
 
