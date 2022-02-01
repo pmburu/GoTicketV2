@@ -26,7 +26,6 @@ urlpatterns += [
     #  - Djoser
     #    - Djoser Simple JWT
     path("api/auth/", include("djoser.urls")),
-    path("api/auth/", include("djoser.urls.jwt")),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
         "api/docs/",
