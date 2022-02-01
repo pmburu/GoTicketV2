@@ -2,7 +2,6 @@ import uuid
 
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 # Import custom manager classes
@@ -29,9 +28,6 @@ class User(AbstractUser):
     user_type = models.CharField(
         _("User Type"), max_length=13, choices=UserTypes.choices, default=base_type
     )
-
-    def get_absolute_url(self):
-        return reverse("users:detail", kwargs={"username": self.username})
 
     """
     Save changes made to the user 'upon registration' by invoking the
