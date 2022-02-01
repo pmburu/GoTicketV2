@@ -60,5 +60,9 @@ if env("USE_DOCKER") == "yes":
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
 INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
+# Simple JWT secret key signing in development
+# ------------------------------------------------------------------------------
+SIMPLE_JWT["SIGNING_KEY"] = SECRET_KEY
+
 # Your stuff...
 # ------------------------------------------------------------------------------
