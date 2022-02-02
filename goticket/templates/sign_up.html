@@ -13,17 +13,17 @@
 					</div>
 
 					<div class="mb-3 col-md-6">
-						<label>Email<span class="text-danger">*</span></label>
+						<label>Email<span ></span></label>
 						<input id="email" type="text" name="email" class="form-control" placeholder="Email">
 					</div>
 
 					<div class="mb-3 col-md-6">
-						<label>First Name<span class="text-danger">*</span></label>
+						<label>First Name<span ></span></label>
 						<input id="first_name" type="text" name="first_name" class="form-control" placeholder="Enter First Name">
 					</div>
 
 					<div class="mb-3 col-md-6">
-						<label>Last Name<span class="text-danger">*</span></label>
+						<label>Last Name<span ></span></label>
 						<input id="last_name" type="text" name="last_name" class="form-control" placeholder="Enter Last Name">
 					</div>
 
@@ -67,9 +67,9 @@
 							processData: false,
 							contentType: "application/json; charset=UTF-8",
 							success: function (data) {
-									console.log('IT WORKED');
 									localStorage.setItem('refreshToken', data['refresh']);
 									localStorage.setItem('accessToken', data['access']);
+									window.location.replace("{% url 'login' %}");
 								},
 							error: function (rs, e) {
 									alert(rs.responseText);
@@ -81,5 +81,6 @@
 		}); // end document
 
 </script>
+</body>
 {% include 'footer.html' %}
-</body></html>
+</html>
