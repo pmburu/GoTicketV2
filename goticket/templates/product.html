@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% include 'header.html' %}
+{% load static %}
+<script>
+	$(document).ready(function(){
+
+			let baseUrl = "{% url 'api:events-detail' pk='0000'%}";
+			$.ajax({
+					url: "{% url 'api:events-detail' event_id %}",
+					type: "GET",
+					success: function(data) {
+							html = '<img src="'+ data.background_image +'" style="height:auto;max-width:100%" alt="" class="img-responsive bg-img">'
+							html += '<div class="ui-trans clearfix">'
+							html += '<img src="'+ data.cover_image +'" alt="" class="img-responsive">'
+							html += '<div class="ui-details clearfix">'
+							html += '<h2><a href="#">'+ data.name +'</a></h2>'
+							html += '<p>'+ data.description +'</p>'
+							html += '<h4><span>Location</span>:</h4>'
+							html += '<h5><a href="#">'+data.location+'</a></h5>'
+							html += '<h4><span>Time</span>:</h4>'
+							html += '<h5><a href="#">'+ data.time +'</a></h5>'
+							html += '</div>'
+							html += '</div>'
+							html += '</div>'
+
+							$('#product_page').append(html);
+						}
+				});
+
+		}); // end document
+</script>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}" media="screen" />
+</head>
+<div class="movie-ticket">
+	<div class="container-fluid">
+		<!-- Item -->
+		<div class="ui-item">
+			<!-- Head -->
+			<div id="product_page"class="ui-head">
+			</div>
+			<div class="ui-review">
+				<a href="#" class="ui-btn bg-red"><i class="fa fa-ticket"></i> Buy Tickets</a>
+			</div>
+		</div>
+	</div>
+</div>

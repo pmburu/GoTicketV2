@@ -8,32 +8,28 @@
 				<h4 class="mb-5 text-secondary">Create Your Account</h4>
 				<div class="row">
 					<div class="mb-3 col-md-6">
-						<label>First Name<span class="text-danger">*</span></label>
-						<input id="username" type="text" name="fname" class="form-control" placeholder="Username">
+						<label>Username<span class="text-danger">*</span></label>
+						<input id="username" type="text" name="username" class="form-control" placeholder="Username">
+					</div>
+
+					<div class="mb-3 col-md-6">
+						<label>Email<span class="text-danger">*</span></label>
+						<input id="email" type="text" name="email" class="form-control" placeholder="Email">
 					</div>
 
 					<div class="mb-3 col-md-6">
 						<label>First Name<span class="text-danger">*</span></label>
-						<input id="email" type="text" name="fname" class="form-control" placeholder="Email">
-					</div>
-
-					<div class="mb-3 col-md-6">
-						<label>First Name<span class="text-danger">*</span></label>
-						<input id="first_name" type="text" name="fname" class="form-control" placeholder="Enter First Name">
+						<input id="first_name" type="text" name="first_name" class="form-control" placeholder="Enter First Name">
 					</div>
 
 					<div class="mb-3 col-md-6">
 						<label>Last Name<span class="text-danger">*</span></label>
-						<input id="last_name" type="text" name="Lname" class="form-control" placeholder="Enter Last Name">
+						<input id="last_name" type="text" name="last_name" class="form-control" placeholder="Enter Last Name">
 					</div>
 
 					<div class="mb-3 col-md-12">
 						<label>Password<span class="text-danger">*</span></label>
 						<input id="password" type="password" name="password" class="form-control" placeholder="Enter Password">
-					</div>
-					<div class="mb-3 col-md-12">
-						<label>Confirm Password<span class="text-danger">*</span></label>
-						<input type="password" name="confirmpassword" class="form-control" placeholder="Confirm Password">
 					</div>
 					<select id="user_select_type" class="form-select">
 						<option value="CUSTOMER" selected>Customer</option>
@@ -76,6 +72,7 @@
 									localStorage.setItem('accessToken', data['access']);
 								},
 							error: function (rs, e) {
+									alert(rs.responseText);
 									console.error(rs.status);
 									console.error(rs.responseText);
 								}
