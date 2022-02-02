@@ -33,10 +33,10 @@ class EventSerializer(serializers.ModelSerializer):
             "background_image",
             "time",
             "manager",
-            "tickets_sold",
+            # "tickets_sold",
         )
 
-        read_only_fields = ("tickets_sold",)
+        # read_only_fields = ("tickets_sold",)
 
 
 class CommentSerializer(serializers.ModelSerializer):
