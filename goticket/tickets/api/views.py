@@ -54,7 +54,10 @@ class OrdersViewSet(viewsets.ModelViewSet):
 
                         # Check whether coupon matches event - being purchased
                         # i.e. if what the user is purchasing has a coupon
-                        if set(current_event).intersection(event_in_coupon):
+
+                        current_event_set = set(current_event)
+                        event_in_coupon_set = set(event_in_coupon)
+                        if current_event_set.intersection(event_in_coupon_set):
 
                             coupon_deductions = coupon.coupon_worth - amount_owed
                             serializer.save(
