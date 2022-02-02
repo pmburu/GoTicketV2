@@ -35,7 +35,7 @@ class OrdersViewSet(viewsets.ModelViewSet):
                 now = timezone.now()
                 code = list(TicketCoupon.objects.values_list("coupon_name", flat=True))
                 coupon = TicketCoupon.objects.filter(
-                    coupon_number__iexact=code,
+                    coupon_number__contains=code,
                     date_created__lte=now,
                     coupon_expiry_date__gte=now,
                     active=True,
