@@ -32,9 +32,7 @@ class EventAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj is not None:
-            return self.readonly_fields + [
-                "manager",
-            ]
+            return self.readonly_fields + ("manager",)
         return self.readonly_fields
 
     def add_view(self, request, form_url="", extra_context=None):
