@@ -1,4 +1,5 @@
 {% load static %}
+{% csrf_token %}
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -6,20 +7,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 	$(document).ready(function() {
+	$("#profile").hide();
+	$("#sign_out").hide();
+	$("#login").hide();
 				$.ajax({
-					url: "http://localhost:8080/login",
+					url: "{% url 'user-me' %}",
 					type: 'GET',
+					dataType: 'json',
 					// Fetch the stored token from localStorage and set in the header
-					headers: {
-						"Authorization": localStorage.getItem('token')
+					headers: {"Authorization": "Bearer " + localStorage.getItem('accessToken')},
+					success: function (result) {
+						$("#profile").show();
+						$("#sign_out").show();
+						$("#login").hide();
+			                },
+					error: function (error) {
+						$("#login").show();
 					}
 				});
 
-				$('input').on('click', function() {
 
-					}
-
-				}
+				});
 </script>
 
 <head>
@@ -59,11 +67,8 @@
 					</li>
 				</ul>
 			</div>
-			{% if request.user.is_authenticated %}
-			<li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'profile'%}">Profile</a></li>
-			<li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'profile'%}">Sign Out</a></li>
-			{% else %}
-			<li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'login'%}">Login</a></li>
-			{% endif %}
+			<li id="profile" class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'profile'%}">Profile</a></li>
+			<li id="sign_out" class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'profile'%}">Sign Out</a></li>
+			<li id="login" class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'login'%}">Login</a></li>
 		</div>
 	</nav>
