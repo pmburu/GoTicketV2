@@ -7,9 +7,6 @@ from django.utils.translation import gettext_lazy as _
 # Import custom manager classes
 from .managers import CustomerManager, EventManagerManager, UserTypes
 
-# from goticket.tickets.models import Ticket
-
-
 """
 Custom user model inheriting from the abtract user since
 there is no major Django default user settings being changed.
@@ -82,9 +79,6 @@ class Profile(models.Model):
     user = models.OneToOneField(
         "users.User", on_delete=models.CASCADE, related_name="user_profile"
     )
-    # tickets = models.ManyToManyField(
-    # 	"tickets.Ticket", related_name="user_tickets"
-    # )
 
     def __str__(self):
         return "{}'s Profile".format(self.owner.last_name)

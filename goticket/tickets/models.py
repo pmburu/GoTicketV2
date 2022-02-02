@@ -74,6 +74,7 @@ class TicketCoupon(models.Model):
     number_of_coupons = models.PositiveIntegerField(default=0)
     uses_per_user = models.PositiveIntegerField(default=1)
     is_active = models.BooleanField(default=True)
+    is_used = models.BooleanField(default=False)
     coupon_number = ArrayField(models.CharField(max_length=6))
 
     def __str__(self):
@@ -95,25 +96,42 @@ class TicketCoupon(models.Model):
         verbose_name_plural = "Ticket Coupons"
 
 
-class TicketCart(models.Model):
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    ticket = models.ForeignKey(
-        "tickets.Ticket",
-        on_delete=models.SET_NULL,
-        related_name="type_of_ticket",
-        null=True,
-    )
-    buyer = models.OneToOneField(
+class TicketOrder(models.Model):
+    buyer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        related_name="bought_by",
-        null=True,
+        on_delete=models.CASCADE,
+        related_name="ticket_orders",
     )
-    quantity = models.PositiveIntegerField(default=0)
+    paid_amount = models.DecimalField(
+        max_digits=8, decimal_places=2, blank=True, null=True
+    )
+    coupon = models.CharField(max_length=6)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.event.name
+        return "{}'s Order".format(self.buyer.last_name)
+
+    class Meta:
+        verbose_name = "Ticket Order"
+        verbose_name_plural = "Ticket Orders"
+        ordering = ["-date_created"]
+
+
+class TicketOrderItem(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order = models.ForeignKey(
+        TicketOrder, on_delete=models.CASCADE, related_name="ticket_items"
+    )
+    ticket = models.ForeignKey(
+        Ticket,
+        on_delete=models.CASCADE,
+        related_name="ticket_items",
+    )
+    quantity = models.PositiveIntegerField(default=1)
+    total = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return "{}".format(self.id)
 
     class Meta:
         verbose_name = "Ticket Cart"
