@@ -43,12 +43,18 @@ class OrdersViewSet(viewsets.ModelViewSet):
                 )
                 if coupon:
                     try:
-                        # Check whether coupon matches event - being purchased
+                        # Create a list of the event from customer's cart
                         current_event = list(
                             ticket_item.get("ticket").event
                             for ticket_item in serializer.validated_data["ticket_items"]
                         )
-                        if current_event.name in coupon:
+
+                        # Create a list of events from filtered coupon queryset
+                        event_in_coupon = coupon.values_list("event", flat=True)
+
+                        # Check whether coupon matches event - being purchased
+                        # i.e. if what the user is purchasing has a coupon
+                        if set(current_event).intersection(event_in_coupon):
 
                             coupon_deductions = coupon.coupon_worth - amount_owed
                             serializer.save(
