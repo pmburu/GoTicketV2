@@ -21,6 +21,8 @@ library later.
 
 
 class EventSerializer(serializers.ModelSerializer):
+    manager = serializers.StringRelatedField()
+
     class Meta:
         model = Event
 
@@ -40,6 +42,9 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    manager = serializers.StringRelatedField()
+    event = serializers.StringRelatedField()
+
     class Meta:
         model = Comments
 
