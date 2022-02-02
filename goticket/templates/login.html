@@ -59,8 +59,7 @@
 														window.location.replace("{% url 'home' %}");
 													},
 											error: function (rs, e) {
-														console.error(rs.status);
-														console.error(rs.responseText);
+														alert(rs.responseText);
 													}
 										}); // end ajax
 							}); // end submit

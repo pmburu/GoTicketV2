@@ -72,6 +72,7 @@
 									localStorage.setItem('accessToken', data['access']);
 								},
 							error: function (rs, e) {
+									alert(rs.responseText);
 									console.error(rs.status);
 									console.error(rs.responseText);
 								}
