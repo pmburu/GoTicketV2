@@ -19,5 +19,8 @@ def signup(request):
 def profile(request):
     return render(request, "profile.html", {})
 
-def product(request):
+def product(request, event_id):
+	return render(request, "product.html", {"event_id": event_id})
+
+def product_empty(request):
 	return render(request, "product.html", {})
